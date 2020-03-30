@@ -1,1 +1,1 @@
-"#study-demo" 
+#study-demo
