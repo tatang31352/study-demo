@@ -1,14 +1,39 @@
 package main
 
 import (
+	"flag"
 	"fmt"
+	"log"
+	"os"
+	"runtime"
+	"runtime/pprof"
 	"sync"
 	"time"
 )
 
-const n int = 5
+const n int = 0
+
+var cpuprofile = flag.String("cpuprofile", "", "write cpu profile `file`")
+var memprofile = flag.String("memprofile", "", "write memory profile to `file`")
+
+const (
+	col = 10000
+	row = 10000
+)
 
 func main() {
+
+	flag.Parse()
+	if *cpuprofile != "" {
+		f, err := os.Create(*cpuprofile)
+		if err != nil {
+			log.Fatal("could not create CPU profile: ", err)
+		}
+		if err := pprof.StartCPUProfile(f); err != nil {  //监控cpu
+			log.Fatal("could not start CPU profile: ", err)
+		}
+		defer pprof.StopCPUProfile()
+	}
 
 
 	//初级Go程序员
@@ -48,7 +73,6 @@ func main() {
 	}
 
 
-
 	//使用成熟的解决方案修复Go缺陷
 	bT = time.Now()
 	resN := NewFactorial(n)
@@ -68,6 +92,18 @@ func main() {
 	eT = time.Since(bT)
 	fmt.Printf("Rob Pike计算%v的阶乘结果为:%v,共耗时:%v\n",n,res,eT)
 
+
+	if *memprofile != "" {
+		f, err := os.Create(*memprofile)
+		if err != nil {
+			log.Fatal("could not create memory profile: ", err)
+		}
+		runtime.GC() // GC，获取最新的数据信息
+		if err := pprof.WriteHeapProfile(f); err != nil {  // 写入内存信息
+			log.Fatal("could not write memory profile: ", err)
+		}
+		f.Close()
+	}
 }
 
 // 初级Go程序员
@@ -108,6 +144,10 @@ func Extensive(n interface{}) interface{}{
 
 //多线程优化的Go程序员
 func Multi(n int) int{
+	if n == 1{
+		return 1
+	}
+
 	var(
 		left,right = 1,1
 		wg sync.WaitGroup
@@ -198,8 +238,9 @@ func RobPike(n int) int{
 	res := 1
 
 	for i := 1;i <= n;i++{
-		res *= 1
+		res *= i
 	}
 
 	return res
 }
+
