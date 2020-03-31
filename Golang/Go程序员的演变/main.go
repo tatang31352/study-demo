@@ -38,15 +38,23 @@ func main() {
 
 	//发现型Go模式
 	bT = time.Now()
-	ch := <- Find(n)
-	eT = time.Since(bT)
-	fmt.Printf("发现型Go模式计算%v的阶乘结果为:%v,共耗时:%v\n",n,ch,eT)
+	ch := Find(n)
+	for i:= 0;i < n;i++{
+		if i == n - 1{
+			fmt.Printf("发现型Go模式计算%v的阶乘结果为:%v,共耗时:%v\n",n,<-ch,eT)
+		}else{
+			<-ch
+		}
+	}
+
+
 
 	//使用成熟的解决方案修复Go缺陷
 	bT = time.Now()
-	resN := NewFactorial(n).n
+	resN := NewFactorial(n)
+	res = resN.CalculateFactorial()
 	eT = time.Since(bT)
-	fmt.Printf("使用成熟的解决方案修复Go缺陷计算%v的阶乘结果为:%v,共耗时:%v\n",n,resN,eT)
+	fmt.Printf("使用成熟的解决方案修复Go缺陷计算%v的阶乘结果为:%v,共耗时:%v\n",n,res,eT)
 
 	//高级Go程序员
 	bT = time.Now()
@@ -59,7 +67,6 @@ func main() {
 	res = Senior(n)
 	eT = time.Since(bT)
 	fmt.Printf("Rob Pike计算%v的阶乘结果为:%v,共耗时:%v\n",n,res,eT)
-
 
 }
 
@@ -137,7 +144,6 @@ func Find(n int) <-chan int{
 			v := prev * i
 
 			ch <- v
-
 			prev = v
 		}
 
