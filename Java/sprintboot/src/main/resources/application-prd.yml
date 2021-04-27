@@ -1,0 +1,9 @@
+server:
+  port: 80
+  servlet:
+    session:
+      timeout: 30
+  tomcat:
+    uri-encoding: UTF-8
+myenvironment:
+  name: 生产环境

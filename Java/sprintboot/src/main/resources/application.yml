@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: prd
+age: 19
+name: felix.xu
+personinfo:
+  name: felix.zzzz
+  age: 3
