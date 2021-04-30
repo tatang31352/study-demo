@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.User;
+import com.example.demo.entity.User2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,10 +46,10 @@ public class ThymeleafController {
     }
     @GetMapping("/list2")
     public ModelAndView list2() {
-        List<User> list = new ArrayList<>();
-        list.add(new User(1,"long"));
-        list.add(new User(2,"zhiran"));
-        list.add(new User(3,"zhiran"));
+        List<User2> list = new ArrayList<>();
+        list.add(new User2(1,"long"));
+        list.add(new User2(2,"zhiran"));
+        list.add(new User2(3,"zhiran"));
         ModelAndView modelAndView = new ModelAndView("list2");
         modelAndView.addObject("list", list);
         return modelAndView;
