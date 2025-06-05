@@ -44,7 +44,7 @@ func (s *studentMgr) editStudent(student *student) {
 		}
 	}
 	//如果走到这里说明输入的学生没有找到
-	fmt.Println("输入的学员信息有误,没有找到学员编号为%d的学员", student.id)
+	fmt.Printf("输入的学员信息有误,没有找到学员编号为%d的学员\n", student.id)
 }
 
 // 学员列表
