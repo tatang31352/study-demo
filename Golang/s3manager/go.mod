@@ -5,6 +5,7 @@ go 1.24.3
 require (
 	github.com/cloudlena/adapters v0.0.0-20250526104710-cf437cc41e89
 	github.com/gorilla/mux v1.8.1
+	github.com/matryer/is v1.4.1
 	github.com/minio/minio-go/v7 v7.0.92
 	github.com/spf13/viper v1.20.1
 )
