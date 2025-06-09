@@ -3,11 +3,23 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"go-gin-example/models"
+	"go-gin-example/pkg/gredis"
+	"go-gin-example/pkg/logging"
 	"go-gin-example/pkg/routers"
 	"go-gin-example/pkg/setting"
+	"go-gin-example/pkg/util"
 	"log"
 	"net/http"
 )
+
+func init() {
+	setting.Setup()
+	models.Setup()
+	logging.Setup()
+	gredis.Setup()
+	util.Setup()
+}
 
 func main() {
 	gin.SetMode(setting.ServerSetting.RunMode)
