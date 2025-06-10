@@ -21,6 +21,8 @@ func init() {
 	util.Setup()
 }
 
+// @title Golang Gin API
+// @version 1.0
 func main() {
 	gin.SetMode(setting.ServerSetting.RunMode)
 

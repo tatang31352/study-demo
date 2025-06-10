@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	"github.com/swaggo/gin-swagger"
+	_ "go-gin-example/docs"
 	"go-gin-example/middleware/jwt"
 	"go-gin-example/pkg/export"
 	"go-gin-example/pkg/qrcode"
@@ -25,6 +26,7 @@ func InitRouter() *gin.Engine {
 
 	r.POST("/auth", api.GetAuth)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	r.POST("/upload", api.UploadImage)
 
 	apiv1 := r.Group("/api/v1")
