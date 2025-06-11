@@ -15,13 +15,18 @@ type auth struct {
 	Password string `valid:"Required; MaxSize(50)"`
 }
 
-// @Summary Get Auth
-// @Produce  json
-// @Param username query string true "userName"
-// @Param password query string true "password"
-// @Success 200 {object} app.Response
-// @Failure 500 {object} app.Response
-// @Router /auth [get]
+// @Summary Authenticate user
+// @Description Authenticates a user by validating the provided username and password, returning a response indicating success or failure.
+// @Tags authentication
+// @Accept application/x-www-form-urlencoded
+// @Produces application/json
+// @Param username formData string true "Username"
+// @Param password formData string true "Password"
+// @Success 200 {object} app.Response "Successful authentication response"
+// @Failure 400 {object} app.Response "Invalid request parameters"
+// @Failure 401 {object} app.Response "Unauthorized - Invalid credentials"
+// @Failure 500 {object} app.Response "Internal server error"
+// @Router /auth [post]
 func GetAuth(c *gin.Context) {
 	appG := app.Gin{C: c}
 	valid := validation.Validation{}

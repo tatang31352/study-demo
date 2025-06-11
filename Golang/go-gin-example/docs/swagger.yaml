@@ -9,20 +9,22 @@ definitions:
     type: object
 info:
   contact: {}
+  title: Golang Gin API
+  version: "1.0"
 paths:
-  /auth:
-    get:
+  /api/export:
+    post:
       parameters:
-      - description: userName
-        in: query
-        name: username
-        required: true
-        type: string
-      - description: password
-        in: query
-        name: password
-        required: true
-        type: string
+      - description: Name
+        in: body
+        name: name
+        schema:
+          type: string
+      - description: State
+        in: body
+        name: state
+        schema:
+          type: integer
       produces:
       - application/json
       responses:
@@ -34,7 +36,177 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/app.Response'
-      summary: Get Auth
+      summary: Export article tag
+  /api/import:
+    post:
+      parameters:
+      - description: Excel File
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/app.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: Import article tag
+  /api/v1/tags:
+    get:
+      parameters:
+      - description: Name
+        in: query
+        name: name
+        type: string
+      - description: State
+        in: query
+        name: state
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/app.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: Get multiple article tags
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      parameters:
+      - description: Authentication token
+        in: query
+        name: token
+        required: true
+        type: string
+      - description: name
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: created_by
+        in: formData
+        name: created_by
+        required: true
+        type: string
+      - description: state
+        in: formData
+        name: state
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/app.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: Add article tag
+  /api/v1/tags/{id}:
+    delete:
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/app.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: Delete article tag
+    put:
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Name
+        in: body
+        name: name
+        required: true
+        schema:
+          type: string
+      - description: State
+        in: body
+        name: state
+        schema:
+          type: integer
+      - description: ModifiedBy
+        in: body
+        name: modified_by
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/app.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: Update article tag
+  /auth:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Authenticates a user by validating the provided username and password,
+        returning a response indicating success or failure.
+      parameters:
+      - description: Username
+        in: formData
+        name: username
+        required: true
+        type: string
+      - description: Password
+        in: formData
+        name: password
+        required: true
+        type: string
+      responses:
+        "200":
+          description: Successful authentication response
+          schema:
+            $ref: '#/definitions/app.Response'
+        "400":
+          description: Invalid request parameters
+          schema:
+            $ref: '#/definitions/app.Response'
+        "401":
+          description: Unauthorized - Invalid credentials
+          schema:
+            $ref: '#/definitions/app.Response'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: Authenticate user
+      tags:
+      - authentication
   /upload:
     post:
       parameters:
