@@ -10,3 +10,6 @@ swag init
 # 访问文档
 http://127.0.0.1:8000/swagger/index.html
 
+# 参考地址
+https://github.com/eddycjy/go-gin-example/blob/master/main.go
+
