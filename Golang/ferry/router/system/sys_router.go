@@ -49,15 +49,15 @@ func RegisterPageRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddlewar
 }
 
 func RegisterBaseRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddleware) {
-	//v1auth := v1.Group("").Use(authMiddleware.MiddlewareFunc()).Use(middleware.AuthCheckRole())
-	//{
-	//	v1auth.GET("/getinfo", system.GetInfo)
-	//	v1auth.GET("/menurole", system.GetMenuRole)
-	//	v1auth.GET("/roleMenuTreeselect/:roleId", system.GetMenuTreeRoleselect)
-	//	v1auth.GET("/roleDeptTreeselect/:roleId", system.GetDeptTreeRoleSelect)
-	//	v1auth.POST("/logout", handler.LogOut)
-	//	v1auth.GET("/menuids", system.GetMenuIDS)
-	//}
+	v1auth := v1.Group("").Use(authMiddleware.MiddlewareFunc()).Use(middleware.AuthCheckRole())
+	{
+		v1auth.GET("/getinfo", system.GetInfo)
+		v1auth.GET("/menurole", system.GetMenuRole)
+		v1auth.GET("/roleMenuTreeselect/:roleId", system.GetMenuTreeRoleselect)
+		v1auth.GET("/roleDeptTreeselect/:roleId", system.GetDeptTreeRoleSelect)
+		v1auth.POST("/logout", handler.LogOut)
+		v1auth.GET("/menuids", system.GetMenuIDS)
+	}
 }
 
 func RegisterLoginLogRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddleware) {

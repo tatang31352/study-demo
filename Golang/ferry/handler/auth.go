@@ -99,6 +99,7 @@ func Authenticator(c *gin.Context) (interface{}, error) {
 	// 查询设置 is_verify_code
 	isVerifyCode, err = settings.GetContentByKey(1, "is_verify_code")
 	if err != nil {
+		logger.Fatalf("是否需要验证: %s\n", err)
 		return nil, errors.New("获取是否需要验证码校验失败")
 	}
 
