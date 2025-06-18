@@ -5,6 +5,7 @@ import (
 	"ferry/database"
 	"ferry/global/orm"
 	"ferry/pkg/logger"
+	"ferry/pkg/task"
 	"ferry/router"
 	"ferry/tools"
 	config2 "ferry/tools/config"
@@ -54,7 +55,7 @@ func setup() {
 	// 2. 初始化数据库链接
 	database.Setup()
 	// 3. 启动异步任务队列
-	//go task.Start()
+	go task.Start()
 }
 
 func run() error {

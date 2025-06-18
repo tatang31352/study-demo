@@ -2,12 +2,19 @@ package router
 
 import (
 	"ferry/apis/tpl"
+	_ "ferry/docs"
 	"ferry/pkg/jwtauth"
 	"ferry/router/dashboard"
 	"ferry/router/process"
 	systemRouter "ferry/router/system"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
+
+func sysSwaggerRouter(r *gin.RouterGroup) {
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+}
 
 func InitSysRouter(r *gin.Engine, authMiddleware *jwtauth.GinJWTMiddleware) *gin.RouterGroup {
 	g := r.Group("")
@@ -18,7 +25,7 @@ func InitSysRouter(r *gin.Engine, authMiddleware *jwtauth.GinJWTMiddleware) *gin
 	sysStaticFileRouter(g, r)
 
 	// swagger；注意：生产环境可以注释掉
-	//sysSwaggerRouter(g)
+	sysSwaggerRouter(g)
 
 	// 无需认证
 	systemRouter.SysNoCheckRoleRouter(g)
